@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <title>Gonzo Metaphysics</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&family=Cinzel:wght@400&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Crimson Text', Georgia, serif;
+      line-height: 1.7;
+      color: #e8e3d8;
+      font-size: 1.125rem;
+      background: linear-gradient(135deg, #1a1611 0%, #2d1f17 50%, #1a1611 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      transition: background-color 2s ease;
+      position: relative;
+    }
+
+    /* Body mood gradients */
+    body.mood-1 {
+      background: linear-gradient(135deg, #1a1611 0%, #2d1f17 50%, #1a1611 100%);
+    }
+    body.mood-2 {
+      background: linear-gradient(135deg, #1a1415 0%, #2a1e1a 50%, #1a1415 100%);
+    }
+    body.mood-3 {
+      background: linear-gradient(135deg, #1c1312 0%, #2c1d18 50%, #1c1312 100%);
+    }
+    body.mood-4 {
+      background: linear-gradient(135deg, #161518 0%, #251e22 50%, #161518 100%);
+    }
+    body.mood-5 {
+      background: linear-gradient(135deg, #141419 0%, #221d25 50%, #141419 100%);
+    }
+    body.mood-6 {
+      background: linear-gradient(135deg, #181314 0%, #281a1d 50%, #181314 100%);
+    }
+    body.mood-7 {
+      background: linear-gradient(135deg, #1a1218 0%, #2a1d24 50%, #1a1218 100%);
+    }
+    body.mood-8 {
+      background: linear-gradient(135deg, #151218 0%, #241d25 50%, #151218 100%);
+    }
+    body.mood-9 {
+      background: linear-gradient(135deg, #1a1014 0%, #2a1c20 50%, #1a1014 100%);
+    }
+    body.mood-10 {
+      background: linear-gradient(135deg, #12141a 0%, #1e202a 50%, #12141a 100%);
+    }
+    body.mood-11 {
+      background: linear-gradient(135deg, #141816 0%, #202826 50%, #141816 100%);
+    }
+
+    .background-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 0;
+      transition: opacity 3s ease-in-out;
+      z-index: -1;
+      mix-blend-mode: overlay;
+    }
+
+    .background-layer.active {
+      opacity: 0.75;
+    }
+
+    .content-container {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      font-size: 2.75rem;
+      text-align: center;
+      color: #f4f1ec;
+      margin: 0 0 60px 0;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      text-align: center;
+      color: rgba(232, 227, 216, 0.8);
+      margin-top: -20px;
+      margin-bottom: 50px;
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle::first-letter {
+      all: unset;
+    }
+
+    p {
+      margin-bottom: 32px;
+      text-align: justify;
+      font-size: 1.2rem;
+      line-height: 1.75;
+      color: #e8e3d8;
+      hyphens: auto;
+    }
+
+    p::first-letter {
+      font-size: 2.5em;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      float: left;
+      line-height: 0.8;
+      margin: 0.1em 0.08em 0 0;
+      color: #d4af37;
+    }
+
+    em {
+      font-style: italic;
+      color: #d4af37;
+      font-weight: 600;
+    }
+
+    #start-button {
+      display: block;
+      margin: 40px auto;
+      padding: 16px 32px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #e8e3d8;
+      cursor: pointer;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    #start-button:hover {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: rgba(212, 175, 55, 0.5);
+      transform: translateY(-1px);
+    }
+
+    #start-button:focus {
+      outline: 2px solid rgba(212, 175, 55, 0.4);
+      outline-offset: 2px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #progress-display {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #e8e3d8;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+
+    @media (max-width: 768px) {
+      .content-container {
+        margin: 20px;
+        padding: 40px 25px;
+      }
+      h1 {
+        font-size: 2.25rem;
+        margin-bottom: 40px;
+      }
+      p {
+        font-size: 1.1rem;
+        margin-bottom: 28px;
+      }
+      p::first-letter {
+        font-size: 2.2em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .content-container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1.05rem;
+        text-align: left;
+      }
+    }
+
+    #volume-control {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #e8e3d8;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #mute-button {
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      color: #e8e3d8;
+    }
+
+    #mute-button svg {
+      width: 100%;
+      height: 100%;
+      stroke: #e8e3d8;
+    }
+    
+    #volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100px;
+      height: 4px;
+      background: rgba(232, 227, 216, 0.3);
+      border-radius: 2px;
+      outline: none;
+      opacity: 0.7;
+      transition: opacity .2s;
+    }
+
+    #volume-slider:hover {
+      opacity: 1;
+    }
+
+    #volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #d4af37;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    #volume-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: #d4af37;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    #volume-slider:disabled {
+      opacity: 0.3;
+    }
+
+    .postscript {
+      padding-top: 150px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      color: rgba(232, 227, 216, 0.6);
+    }
+
+    .postscript p {
+      text-align: center;
+      margin-bottom: 1em;
+      font-size: 10px;
+    }
+
+    .postscript p::first-letter {
+      all: unset;
+    }
+  </style>
+</head>
+<body class="mood-1">
+  <div id="volume-control">
+    <button id="mute-button">
+      <svg id="icon-volume-on" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      <svg id="icon-volume-off" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9"x2="23" y2="15"></line></svg>
+    </button>
+    <input type="range" id="volume-slider" min="-40" max="0" value="0" step="1">
+  </div>
+
+  <div
+    class="background-layer active"
+    id="bg-1"
+    style="background-image: url('assets/images/background_1.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-2"
+    style="background-image: url('assets/images/background_2.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-3"
+    style="background-image: url('assets/images/background_3.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-4"
+    style="background-image: url('assets/images/background_4.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-5"
+    style="background-image: url('assets/images/background_5.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-6"
+    style="background-image: url('assets/images/background_6.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-7"
+    style="background-image: url('assets/images/background_7.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-8"
+    style="background-image: url('assets/images/background_8.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-9"
+    style="background-image: url('assets/images/background_9.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-10"
+    style="background-image: url('assets/images/background_10.png');"
+  ></div>
+  <div
+    class="background-layer"
+    id="bg-11"
+    style="background-image: url('assets/images/background_11.png');"
+  ></div>
+
+  <div class="content-container">
+    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 40px;">
+      <div style="flex: 0 0 auto; margin-right: 12px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="160" height="40" viewBox="0 0 160 40" fill="none">
+          <path d="M0 20 H30 M130 20 H160" stroke="#d4af37" stroke-width="1.5" opacity="0.7"/>
+          <path d="M30 20 Q40 5, 55 20 T80 20 T105 20 Q120 5, 130 20" stroke="#d4af37" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <path d="M35 20 Q45 10, 55 20 T80 20 T105 20 Q115 10, 125 20" stroke="#d4af37" stroke-width="1" fill="none" opacity="0.5"/>
+          <path d="M40 20 Q50 15, 55 20 T80 20 T105 20 Q110 15, 120 20" stroke="#d4af37" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <circle cx="80" cy="20" r="3" fill="#d4af37" opacity="0.9"/>
+          <circle cx="80" cy="20" r="6" stroke="#d4af37" stroke-width="1" fill="none" opacity="0.5"/>
+          <circle cx="80" cy="20" r="9" stroke="#d4af37" stroke-width="0.8" fill="none" opacity="0.3"/>
+          <circle cx="50" cy="20" r="1.5" fill="#d4af37" opacity="0.7"/>
+          <circle cx="110" cy="20" r="1.5" fill="#d4af37" opacity="0.7"/>
+        </svg>
+        
+      </div>
+      <h1 style="margin: 0; padding: 0;">Gonzo Metaphysics</h1>
+      <div style="flex: 0 0 auto; margin-left: 12px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="160" height="40" viewBox="0 0 160 40" fill="none" style="transform: scaleX(-1);">
+          <path d="M0 20 H30 M130 20 H160" stroke="#d4af37" stroke-width="1.5" opacity="0.7"/>
+          <path d="M30 20 Q40 5, 55 20 T80 20 T105 20 Q120 5, 130 20" stroke="#d4af37" stroke-width="1.5" fill="none" opacity="0.7"/>
+          <path d="M35 20 Q45 10, 55 20 T80 20 T105 20 Q115 10, 125 20" stroke="#d4af37" stroke-width="1" fill="none" opacity="0.5"/>
+          <path d="M40 20 Q50 15, 55 20 T80 20 T105 20 Q110 15, 120 20" stroke="#d4af37" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <circle cx="80" cy="20" r="3" fill="#d4af37" opacity="0.9"/>
+          <circle cx="80" cy="20" r="6" stroke="#d4af37" stroke-width="1" fill="none" opacity="0.5"/>
+          <circle cx="80" cy="20" r="9" stroke="#d4af37" stroke-width="0.8" fill="none" opacity="0.3"/>
+          <circle cx="50" cy="20" r="1.5" fill="#d4af37" opacity="0.7"/>
+          <circle cx="110" cy="20" r="1.5" fill="#d4af37" opacity="0.7"/>
+        </svg>
+        
+      </div>
+    </div>
+    
+    <p class="subtitle">by Tim Hardwick • Music by Ersatz</p>
+
+    <button id="start-button">◉ Begin reading and listening</button>
+
+    <p id="mood_1" class="fade-in">
+      All trips start before they have begun and continue long after they have ended.
+      Even the first sign of psychedelic awareness is the symptom of a subconscious event
+      set in motion at an earlier point on a subtler sentient scale. It is the delayed grok
+      that says alteration is already underway, like the ontic reverb the seasoned psychonaut
+      feels holding a mushroom cap, a symbiotic moment charged with a dual tone of uncharted
+      voyage and a peculiar consciousness of coming home.
+    </p>
+
+    <p class="fade-in">
+      With this recognition I leave the hillside and turn homeward, finally in possession of
+      the psychedelic key whose delicate biochemistry resonates far beyond the field in which
+      it was born. Preparations must be made for such far-flung effects. My conscious intention
+      for the day's trip was verbalized immediately upon waking, but the circuitous vector of
+      most psychedelic events is established before dawn, in the dreaming bodies of trippers,
+      and in the fruiting bodies of fungi. Only then does it wend its way along the serpentine
+      path of the seekers' steps as they unwittingly trace through the dew-glazed grass the
+      tapestry of subterranean filaments from which their trip key bloomed.
+    </p>
+
+    <p id="mood_2" class="fade-in">
+      As I descend towards town, the crisp morning air of the autumn meadow invites me to
+      rise above the cracked slate roofs and blackened chimney tops and cast off my socially
+      sanctioned self-image, but it is within the sheltering walls of home where today's
+      ritualistic centre of gravity resides. Disentangled for a time from the responsibilities
+      of quotidian life, from all its attendant frustrations and petty demands, the familiarity
+      of a quiet, empty house protects the solitary tripper, and allows one to trip in peace.
+      It is usually a place in which to turn inward, but today I want awareness to have a
+      freer reign in the hope that an encounter with these familiar spaces might reveal to me
+      the most unconscious aspects of my domesticated psychology.
+    </p>
+
+    <p class="fade-in">
+      A living past dwells in every house. Heirlooms have a psychic weight, wallpaper and
+      shadows an emotional tone. Memories maintain their coloured imprint on things, like
+      the lingering impressions of long-dead limbs on old sun-bleached furnishings. The
+      virtuality of my residence gradually reveals itself as the mushroom begins to uncoil
+      the presuming power of my senses. The mnemic stamp of previous dwelling places
+      co-penetrate within a singular compressed time. These location-events disclose
+      themselves as places I once tripped, having now been reconstituted in the
+      present trip experience. I am reminded of the house I grew up in, my first universe,
+      the earthly paradise of the maternal home in which I was born, long before my
+      inescapable fate of being thrown into this world. This feeling of throwness gradually
+      begins to expand and encircle me, and as I sit in silence, an immemorial domain seems
+      to open up beneath my feet. It is another place I have called home, yet one which
+      seems to lie beyond even my earliest memory. This feeling gives way to anticipation –
+      of a great discovery (or re-discovery?) that is tinged with an almost cosmic sensation
+      of otherness, and I realize that my voyage has only just begun.
+    </p>
+
+    <p id="mood_3" class="fade-in">
+      As I lie in bed, I gaze at a painting on the wall of a Victorian fairground in a public
+      square – a post-impressionist nocturne by some anonymous Parisian artist. The subject
+      is a throng of working-class families gathered beneath a low canopy of trees. Some are
+      Browse stalls of attractions, while others compete in various games of chance and
+      skill – a brief respite perhaps from the daily factory grind. Despite their lot in life, the
+      gathering evokes a carnival atmosphere, warmly illuminated by the dominant whirling
+      lights of a carousel. The picture has followed me from home to home, becoming in the
+      process timeworn and impoverished by the dulling effects of long association and
+      familiarity. But today its pigments sparkle with opalescent tones and novel
+      juxtapositions that seem distinct from the history of the forms they depict, as though they
+      somehow operate outside of time.
+    </p>
+
+    <p class="fade-in">
+      The longer I stare at the details, the more fluid they become, until a strange phase
+      transition appears to take place, transforming the picture into a <em>mis en scène</em>.
+      The trees resemble the pearly underbelly of a pavilion roof, the leaves colored bunting
+      flapping in the breeze. The outline of striped tents, light-bulb totems, and shooting
+      galleries bulge beyond their brush-stroked boundaries. The life of the fairground is
+      slowly revivified before me as the frame falls away to reveal an expanse of horse-drawn
+      trailers and carriages parked haphazardly across a soaring grass bank. Dry ice gushes
+      from the base of a piston arm as it leavens a ferris wheel of carnival-goers towards the
+      sky. I watch in wonder as several human faces sheared by neon tracers ascend into the
+      night, and for a brief lunatic moment I can read their minds, hear their screams, feel
+      their urge to be freed from a fraying harness and a turgid plastic life and sent careening
+      through the treetops to a better existence.
+    </p>
+
+    <p class="fade-in">
+      Is this queer hallucination simply an expression of my own disenchantment with the world?
+      I ask myself why suffering occurs, puzzle about the purpose of life, and question whether
+      there is a larger, unseen order governing the universe, or simply chaos. Already it seems I
+      have reached that psychedelic space where the whole depths of life are revealed within the
+      scene before one's eyes, no matter how trivial it is usually considered to be. Regardless of
+      context, everything is suddenly susceptible to some kind of metaphysical signification.
+      Then it occurs to me: what if I make a concerted effort to delve deeper into something
+      explicitly metaphysical – such as metaphysics itself?
+    </p>
+
+    <p id="mood_4" class="fade-in">
+      It is said that philosophy, more than any other intellectual discipline, requires a radical
+      reconfiguring of the mental grooves which make us always see things in the same way.
+      With this in mind, I pick up <em>The Essence of Plato</em>, the book I have been reading
+      over the last few nights, and look at the cover that first caught my eye in the second-hand
+      bookshop – a watercolour rendition of the philosopher's famous Allegory of the Cave. As
+      the story goes, a group of people have lived their entire lives chained up inside a cave,
+      facing a wall, and projected on that wall are an endless parade of shadows. The shadows
+      are cast by objects which, unbeknownst to the prisoners, are being passed in front of a
+      fire behind them. Since the shadows are all they have ever known, the prisoners take
+      them to be reality. They notice patterns in the way the shadows behave, and even give
+      names to them, believing that they understand the truth. Then one day a prisoner is
+      freed from the cave, experiences for the first time the real world above, and realizes that
+      the things seen in the cave were merely shadows of real objects. The freeing of
+      the prisoner is said to represent the promise of philosophy. In effect, by doing philosophy,
+      one may see beyond the superficial everyday world and grasp the true nature of reality,
+      in order to learn from it and align one's beliefs and actions accordingly.
+    </p>
+
+    <p class="fade-in">
+      Plato believed that we recognise truth because the soul has seen it before. Beyond the
+      reach of the senses lies a realm of eternal Ideas – archetypes known to the soul before
+      birth.
+    </p>
+
+    <p class="fade-in">
+      These Forms are said to ground all our knowledge. They give abstract terms like 'beauty',
+      'justice', and 'virtue' a metaphysical pedigree. Each Form serves as the defining essence
+      of its kind: a singular, unchanging standard against which all worldly instances are
+      measured. Each Form also serves as a kind of metaphysical cause. A flower, for instance,
+      is a flower because it participates in the Form of the Flower. Beautiful things are
+      beautiful because they share in the Form of Beauty. In this way, Plato hoped to solve the
+      problem of universals by proposing that things in the world resemble each other not by
+      accident, but through their shared participation in a single, perfect original. The Forms
+      explain not only how we think about things, but makes those things what they are.
+    </p>
+
+    <p id="mood_5" class="fade-in">
+      I lie back on my bed and let the theory hover in my mind like a diagram drawn in vapor.
+      Above me, the ceiling light begins to bloom. Its halo appears brighter than the filament
+      inside the bulb, and extends beyond the immediate filigree molding to a larger circular
+      pattern on the ceiling. The aura seems significant in a way I cannot quite put my finger
+      on. These features appear vexed that they have only just caught my attention, and the
+      labels I normally attach to them almost begin to elevate themselves beyond their proper
+      rank in life. I am not seeing any old ceiling centerpiece, they protest. I am in fact
+      looking at the Form of the Circle, made manifest in material form.
+    </p>
+
+    <p class="fade-in">
+      Every room in the house has one of these ceiling rosettes. Every house on the street,
+      probably. A recurring motif – like a secret glyph of residential geometry. Roundness
+      upon roundness. My eyes find circles everywhere. They multiply: plates, pupils, clock
+      faces, the sun. All seemingly participating in some shared roundness. This explains how
+      things change and yet stay the same. But how do I, or anyone else for that matter,
+      recognize circularity in the first place? No perfect circle has ever been seen in nature.
+      The idea of circularity feels more like a concept that I've abstracted from many near-
+      misses than something glimpsed in some prenatal cosmic syllabus. Why must Plato insist
+      it must exist in a separate, eternal realm?
+    </p>
+
+    <p class="fade-in">
+      I close my eyes and try to picture the Form of Circle, as if it too were a particular
+      thing. It is an impossible task, like imagining a color that doesn't exist. And yet,
+      nebulously an image emerges from the roiling blackness that has a visionary quality to
+      it, an almost Pythagorean prescience. Every point on its circumference appears exactly
+      the same distance from its centre, a pure circularity that is in some sense vitreous or
+      translucent, which seems to endow it with an implicate nature that can be present in
+      not only this time and place, but other times and places also. Through the prism of its
+      perfection there is a suggestion of mirrored depth, like a sphere whose interior, if compelled
+      to do so, could migrate to its surface and graduate outwards indefinitely. Suddenly the
+      circle's crystal radiance intensifies, and the disc fractures into multiple elliptical forms
+      that ramify outwards in a conjunction of concentric circles, gradually declining in
+      intensity as they glide across what is, by all appearances, an infinite two-dimensional
+      plane.
+    </p>
+
+    <p class="fade-in">
+      These copies aren't just approximations, but have an internal resemblance which
+      participates in the original Form's pure quality. Even if all the circles in the world were
+      suddenly destroyed – this dance of declension seems to say – I, the perfect Circle,
+      would remain.
+    </p>
+
+    <p id="mood_6" class="fade-in">
+      For Plato, the eternal, unchanging aspect of the Form of Circularity is what makes it a
+      universal – the one true cause of the circularity that particular circular things have in
+      common.
+    </p>
+
+    <p class="fade-in">
+      Why then does the incidental and superfluous ornamentation above me seem to
+      indignantly assert itself as the Circle of all circles made manifest in material form? I
+      open my eyes and stare at it intently as it begins to resemble a perfect cordon
+      surrounding a delicate work of ancient abstract art, like the floodlit perimeter of an
+      inverse archaeological dig. I lie still for a while in order to fully absorb this strange
+      upside-down world that has brought forth itself before me, at which point I notice that
+      the filigree pattern is in fact a pendant of ivy leaves. The frail stems branch off from
+      vines that reach out and twine around each other in a curvilinear continuum. I realize
+      that of course ivy, being an evergreen plant, represents eternity, perennial life,
+      immortality. Is this the subliminal origin of its spontaneously aroused sublimity? But
+      then I remember that ivy berries are poisonous, and in certain parts of Britain, to bring
+      the plant indoors is considered bad luck. Before I have even arrived at the terminus of
+      this thought, each leaf seems to cringe arthritically, like a slowly tightening claw. The
+      once-sublime vines almost visibly wilt, like the first sign of a cambial disease, and a
+      visceral sinking sensation takes hold.
+    </p>
+
+    <p class="fade-in">
+      An unusual discomfort compels me to sit up. Everything looks less clearly defined, a
+      little less sure of itself, as though the objects in view are poised to act – or having acted,
+      have abruptly come to a halt by the force of my arresting vision. On my bedside table
+      is a copy of the William Burroughs novel <em>Naked Lunch</em>, and I pick it up
+      only half-intentionally, as if to reinstate some sense of normalcy. However, by simply
+      altering the position of my head, an altogether different kind of world suddenly appears.
+      As I open the book, I am transfixed by the black and white photograph on the inside
+      front cover of an elderly Burroughs. The picture must have been taken when the author
+      was in his late seventies. A freshly ironed open-collar shirt and blazer do nothing to
+      conceal the bony, hunched posture that lurches into the flash of the camera, yet his
+      eyes gaze into the lens with a defiantly youthful curiosity. I begin to notice that it is
+      not just the eyes alone that appear indifferent to the weariness of old age. The
+      surrounding topography of lines and wrinkles are slowly relinquishing their depth
+      before smoothing themselves away entirely before my own eyes, like the wind's
+      inexorable whittling down of a rippled desert dune over weeks and months – only in
+      this case accelerated like a time-lapse movie. An amateur interest in photographic
+      techniques has taught me that one of the most important aspects of time-lapse
+      photography is choosing how long to turn off the camera between frames. The period
+      when the camera is not exposing frames is called the wait time, which can range from
+      a quarter of a second to record a sequence of passing clouds, to one frame every fifteen
+      minutes when capturing an acorn opening into a seedling. The present transfiguration
+      has a wait time closer to a solar year, as though I am looking at a portrait-in-progress of
+      a living statue continually enervated by the cycling seasons.
+    </p>
+
+    <p id="mood_7" class="fade-in">
+      These fluid movements in age and demeanor seem punctuated by brief stochastic
+      interludes harking back to specific moments in Burroughs' checkered biographical
+      chronology, like mixed-up chapters of a life story, an animating visual equivalent of his
+      literary cut-up technique. One time splice shows the face of uxoricide – Burroughs the
+      killer of Joan Vollmer, his second wife, the victim of a drunken William Tell stunt. In
+      another scene, a wide-eyed six-year-old tracks a strange apparition in the woods at
+      nighttime. The succeeding image captures the moment in which an adolescent
+      Burroughs realizes his homosexuality. In the next instant I see William the proud
+      father, a pristine vision of paternalism, only for it to be twisted into the desperate stare of
+      a depraved junky shorn of another fix. In many situations the average viewer of time-
+      lapse cannot tell the direction in which time is moving; inexplicably, I am witnessing the
+      same dilemma firsthand in what is somehow, at the same time, a clearly static image.
+      I can no longer tell if the face is moving forward through the years or continually
+      winding back the clock. The dark circles around the eye sockets, the receding hairline,
+      the liver spots, furrows and shadows around the facial contours visibly retreat, only to
+      advance and ingrain themselves more indelibly than before in the silent approach of
+      death, as if the whole scene threatens to recapitulate the distilled memories of a
+      lifetime, from the author's childhood to his twilight years in an intensifying closed loop
+      that's spinning towards some sort of singularity in which all times and places might
+      conceivably become one.
+    </p>
+
+    <p class="fade-in">
+      I slam the book shut, canceling the possibility of an impending apocalypse: the
+      threatened ingression of an eternal Form into the temporal world. I lie back down and
+      close my eyes, only to see another transmogrifying Bill Burroughs, a living afterimage
+      that, like its origin, drifts interminably from its former status as a still photo of a dead
+      author in a rescued library book. I try to pacify my mind by remembering that pure
+      Forms can never take material form, for that would be antithetical to their very premise.
+      Forms stand outside human experience; they transcend the world – not only the
+      experienced world, but the world itself.
+    </p>
+
+    <p id="mood_8" class="fade-in">
+      Each flickering manifestation that appears in my mind's eye is unique unto itself, yet a
+      likeness between them remains. But Plato said likeness needs a Form too – an eternal
+      Likeness that all likenesses borrow from. But if the thing resembles the Form,
+      doesn't the Form resemble the thing? So now we need a second Form to explain the
+      resemblance between them. And then a third to explain that resemblance. And so on,
+      ad infinitum. It's a hall of mirrors where each mirror needs a mirror to explain its
+      reflection. The logic spirals – not upward into clarity, but outward into obscurity.
+    </p>
+
+    <p class="fade-in">
+      This thought persuades me to open my eyes, condemning my priceless vision of absurdity
+      to oblivion in an instant. I check the numbers on the clock on the bedside table. The
+      contrast between real time and subjective time is striking. From the moment I became
+      intrigued by the effluence of meaning emanating from the ceiling, barely five minutes have
+      elapsed. But this, it turns out, is the least of my concerns. I am mentally thrown, indeed
+      bewildered, by what has just occurred. Plato's Forms have deeply invaded my trip,
+      implicating themselves in my reality as the cause of the properties and relations shared by
+      like things, which up until now, I simply took for granted as being out there in the world.
+      Yet the participation of these things has only ended up ceaselessly multiplying the Forms
+      into even more Forms than there are things in the world. Now it seems as if the only way
+      out of this infinite regress is to reduce the transcendent Forms to purely mental concepts,
+      <em>thoughts in my head</em>, which by definition do not possess the properties that
+      they name and so are not themselves members of an endless plurality.
+    </p>
+
+    <p id="mood_9" class="fade-in">
+      To do this though, I must assume that my concepts are truly representative of things in
+      the world. But how do I know for sure? Unless external things are also mental entities of
+      some sort, how can I be certain that they relate at all to my concepts? The whole
+      motivation for the Forms was to account for the shared qualities and relations between
+      things in mind-independent reality, but this causal role has suddenly been lost, leaving
+      nothing, seemingly, to replace it. What guarantee is there that my concepts unify things
+      in the same way that anyone else's do? Indeed, what if all my concepts have ever done
+      is masquerade as the causal forebears of common things in the world, imposing a
+      perceptual sameness on them which <em>isn't actually there</em>?
+    </p>
+
+    <p class="fade-in">
+      The question hangs in the air threateningly, like a tear in the fabric of reality. I look up
+      at the ceiling again, perhaps subconsciously seeking the last station of my previous sure
+      existence. The Form of the Circle remains, only now it comes across as terribly
+      portentous, perhaps even staged. The Forms were supposed to anchor the world. But
+      now they are multiplying like spores in a petri dish – one for every shared trait, every
+      resemblance, every property and predicate. The more I chase them, the less they
+      explain. The end result is that the house I once called home is transforming into a dripping,
+      lolling, surrealist landscape. A hitherto hackneyed and conventional domestic scene
+      typically held at arm's length by my wandering mind is now a living composition,
+      <em>leaning into me</em>. Against the carpet – now a shimmering protean lake of leaves
+      and blossom – a series of everyday objects take up stylized positions on the tiled surface
+      of the coffee table like mercurial performers in a carnival parade. Saucers turn into
+      decorated floats, cups mount their elevated elliptical platforms and, as if silhouetted by
+      spotlights, turn their most elaborately adorned profiles towards me. This impromptu
+      performance, which alone is more than my fragile mind can parse, falls against a
+      latticework of indefinable contrasts; a network of armchair dimensions which steadfastly
+      refuse to correspond to the implicit standards that my body expects of them. 'My body?'
+      I find myself wondering in delayed surprise. I hardly even recognize it as such. The
+      outlines and surfaces of my limbs are visibly translucent. My arms and legs are breathing.
+    </p>
+
+    <p id="mood_10" class="fade-in">
+      I desperately try to account for what is happening in terms that conform to my prevailing
+      beliefs about mental and physical boundaries. Yet for the first time in my life, this
+      question of it being either one way or the other no longer seems workable. It is as though
+      the light of my consciousness is being shone through an endlessly fracturing conceptual
+      prism in which the gap between self and other is no longer clear-cut and unvarying, but
+      continually splitting into something new.
+    </p>
+
+    <p class="fade-in">
+      I try to assign the cause of these fluctuations to one world or the other. Inner or outer?
+      Mind or matter? Yet at the centre of every seemingly reasonable position I discover a
+      niggling seed of erasure that grows into its polar opposite and inverts the initial premise,
+      indeed occludes the very thought-form that was its substratum, before somehow resolving
+      to enroll and admit it within another, higher-order abstraction that tends towards unity –
+      only for it to likewise negate itself completely. I watch in rapt awe as these competing
+      narratives detach from my stream of ideation and take on a life of their own, wheeling and
+      converging in my open mind's eye as a dyadic dance of ascending kaleidoscopic spirals,
+      an exquisitely self-animated choreography of shape and color that is accelerating
+      upwards, I realize, towards the oculus of a vast crystalline dome that's enveloping my
+      awareness from above like a hyperbolic crown. With a gracefulness that is almost balletic,
+      these spiraloid thoughtforms enter the geometric superstructure and pass through its
+      open center to exit in unison, leaving only flickering tracers behind them, like comet tails
+      cavorting in a solar wind.
+    </p>
+
+    <p id="mood_11" class="fade-in">
+      Without warning, the vision collapses into infinitely graded sparkling jets of
+      differentiated light, cued by a cloud of starlings outside that erupts from the treetops, like
+      shrapnel from an explosion. The sound of their startled calls instills in me a palpable
+      sensation of weightlessness, which for a brief eternity leaves everything substantial
+      suspended in midair. Inevitably the moment passes, but in the days and weeks that
+      follow, this sensation of levity remains with me, at once as a memory and an abiding
+      presence, silently lining the patina of my soul.
+    </p>
+    <div style="text-align: center; margin: 80px 0 40px 0;">
+      <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" stroke="#d4af37" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="50" cy="50" r="36" stroke="#d4af37" stroke-width="1" opacity="0.4"/>
+        <circle cx="50" cy="50" r="24" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+        <g stroke="#d4af37" stroke-width="1" opacity="0.7">
+          <path d="M50 2 Q52 12, 62 16 Q52 18, 50 28 Q48 18, 38 16 Q48 12, 50 2 Z"/>
+          <path d="M50 98 Q52 88, 62 84 Q52 82, 50 72 Q48 82, 38 84 Q48 88, 50 98 Z"/>
+          <path d="M2 50 Q12 52, 16 62 Q18 52, 28 50 Q18 48, 16 38 Q12 48, 2 50 Z"/>
+          <path d="M98 50 Q88 52, 84 62 Q82 52, 72 50 Q82 48, 84 38 Q88 48, 98 50 Z"/>
+        </g>
+        <g fill="#d4af37" opacity="0.8">
+          <circle cx="50" cy="50" r="3"/>
+          <circle cx="50" cy="18" r="2"/>
+          <circle cx="50" cy="82" r="2"/>
+          <circle cx="18" cy="50" r="2"/>
+          <circle cx="82" cy="50" r="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="postscript">
+      <p>Footer text goes here</p>
+      <p>Credits / links / etc</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as Tone from 'https://cdn.skypack.dev/tone';
+  
+    // ═══════════════════════════════════════════════════════════════
+    // FLEXIBLE AUDIO SYSTEM ARCHITECTURE
+    // ═══════════════════════════════════════════════════════════════
+  
+    // --- MASTER BUS ---
+    const masterCompressor = new Tone.Compressor({
+      threshold: -5,
+      ratio: 1.25,
+      attack: 0.1, // slow attack
+      release: 0.5, // slow release
+    }).toDestination();
+  
+    // --- GLOBAL EFFECTS BUSES ---
+    const reverbSend = new Tone.Freeverb({
+      roomSize: 0.9,
+      dampening: 8000,
+      wet: 0.6,
+    }).connect(masterCompressor);
+  
+    const fmFilterSend = new Tone.Filter({
+      type: 'lowpass',
+      frequency: 20000,
+      Q: 0.5,
+    }).connect(masterCompressor);
+  
+    const langLadderFilterSend = new Tone.Filter({
+      frequency: 20000,
+      type: 'lowpass',
+      Q: 0,
+      rolloff: -12,
+    }).connect(masterCompressor);
+  
+    const mahler2Phaser = new Tone.Phaser({
+      frequency: 0.2,
+      octaves: 4,
+      stages: 8,
+      Q: 8,
+      baseFrequency: 400,
+    });
+    mahler2Phaser.connect(reverbSend);
+    mahler2Phaser.connect(masterCompressor);
+  
+    const mahler2Effects = {
+      input: mahler2Phaser,
+    };
+  
+    // ────── STEM CONFIGURATIONS ──────
+    const stemConfigs = {
+      mainsynth: {
+        type: 'region_switch',
+        files: [
+          'assets/audio/mainsynth_1.aac',
+          'assets/audio/mainsynth_2.aac',
+          'assets/audio/mainsynth_3.aac'
+        ],
+        regions: [0, 0.086, 0.24],
+        crossfade: 20.0
+      },
+      glist: {
+        type: 'region_switch',
+        files: [
+          'assets/audio/glist_1.aac',
+          'assets/audio/glist_2.aac',
+          'assets/audio/glist_3.aac'
+        ],
+        regions: [0, 0.086, 0.24],
+        crossfade: 4.0
+      },
+      bubbles: {
+        type: 'region_switch',
+        files: [
+          'assets/audio/bubbles_1.aac',
+          'assets/audio/bubbles_2.aac',
+          'assets/audio/bubbles_3.aac',
+          'assets/audio/bubbles_4.aac',
+          'assets/audio/bubbles_5.aac'
+        ],
+        regions: [0, 0.45, 0.56, 0.66, 0.71],
+        crossfade: 8.0,
+        reverb: true
+      },
+      orch: {
+        type: 'simple_loop',
+        files: ['assets/audio/orch.aac'],
+        crossfade: 1.0,
+        reverb: true
+      },
+      orch2: {
+        type: 'simple_loop',
+        files: ['assets/audio/orch2.aac'],
+        crossfade: 1.0,
+        reverb: true
+      },
+      voronoi: {
+        type: 'simple_loop',
+        files: ['assets/audio/voronoi.aac'],
+        crossfade: 2.0
+      },
+      fm1: {
+        type: 'simple_loop',
+        files: ['assets/audio/fm1.aac'],
+        crossfade: 0.5,
+        filter: true
+      },
+      fm2: {
+        type: 'simple_loop',
+        files: ['assets/audio/fm2.aac'],
+        crossfade: 0.5,
+        filter: true
+      },
+      mahler1: {
+        type: 'simple_loop',
+        files: ['assets/audio/mahler1.aac'],
+        crossfade: 1.0
+      },
+      piano: {
+        type: 'simple_loop',
+        files: ['assets/audio/piano.aac'],
+        crossfade: 0.0
+      },
+      lang: {
+        type: 'simple_loop',
+        files: ['assets/audio/lang.aac'],
+        crossfade: 2.0,
+        ladderFilter: true
+      },
+      sineChord: {
+        type: 'simple_loop',
+        files: ['assets/audio/bowl.aac'],
+        crossfade: 0.25
+      },
+      supersaw: {
+        type: 'simple_loop',
+        files: ['assets/audio/supersaw.aac'],
+        crossfade: 0.25
+      },
+      'japbell_1.0': {
+        type: 'simple_loop',
+        files: ['assets/audio/japbell_1.0.aac'],
+        crossfade: 1.0,
+        group: 'japbell',
+        speed: 1.0
+      },
+      'japbell_0.75': {
+        type: 'simple_loop',
+        files: ['assets/audio/japbell_0.75.aac'],
+        crossfade: 1.0,
+        group: 'japbell',
+        speed: 0.75
+      },
+      'japbell_0.5': {
+        type: 'simple_loop',
+        files: ['assets/audio/japbell_0.5.aac'],
+        crossfade: 1.0,
+        group: 'japbell',
+        speed: 0.5
+      },
+      'japbell_0.167': {
+        type: 'simple_loop',
+        files: ['assets/audio/japbell_0.167.aac'],
+        crossfade: 1.0,
+        group: 'japbell',
+        speed: 0.167
+      },
+      'japbell_0.001': {
+        type: 'simple_loop',
+        files: ['assets/audio/japbell_0.001.aac'],
+        crossfade: 1.0,
+        group: 'japbell',
+        speed: 0.001
+      },
+      'mahler2_1.0': {
+        type: 'simple_loop',
+        files: ['assets/audio/mahler2_1.0.aac'],
+        crossfade: 2.0,
+        group: 'mahler2',
+        speed: 1.0,
+        effectsBus: 'mahler2'
+      },
+      'mahler2_0.5': {
+        type: 'simple_loop',
+        files: ['assets/audio/mahler2_0.5.aac'],
+        crossfade: 2.0,
+        group: 'mahler2',
+        speed: 0.5,
+        effectsBus: 'mahler2'
+      },
+      'mahler2_0.25': {
+        type: 'simple_loop',
+        files: ['assets/audio/mahler2_0.25.aac'],
+        crossfade: 2.0,
+        group: 'mahler2',
+        speed: 0.25,
+        effectsBus: 'mahler2'
+      },
+      'mahler2_0.1': {
+        type: 'simple_loop',
+        files: ['assets/audio/mahler2_0.1.aac'],
+        crossfade: 2.0,
+        group: 'mahler2',
+        speed: 0.1,
+        effectsBus: 'mahler2'
+      },
+      birds: {
+        type: 'simple_loop',
+        files: ['assets/audio/birds.aac'],
+        crossfade: 1.0
+      }
+    };
+  
+    // ────── PARAMETER CURVES ──────
+    const stemParamCurves = {
+      mainsynth: {
+        volume: [
+          [0.0, -2.5],
+          [0.2037, -2.5],
+          [0.5093, -40],
+          [0.6518, -100],
+          [1.0, -100]
+        ]
+      },
+      glist: {
+        volume: [
+          [0.0, -100],
+          [0.0204, -100],
+          [0.0815, -32],
+          [0.1426, -22],
+          [0.2037, -20],
+          [0.275, -16],
+          [0.3565, -14.7],
+          [0.4278, -11.6],
+          [0.4991, -20],
+          [0.5704, -29],
+          [0.6518, -29],
+          [0.7231, -100],
+          [1.0, -100]
+        ]
+      },
+      bubbles: {
+        volume: [
+          [0.0, -100],
+          [0.4278, -100],
+          [0.4991, -32],
+          [0.5704, -18],
+          [0.6518, -16],
+          [0.7231, -18],
+          [0.7944, -22],
+          [0.8657, -100],
+          [1.0, -100]
+        ]
+      },
+      orch: {
+        volume: [
+          [0.0, -100],
+          [0.275, -100],
+          [0.3565, -40],
+          [0.4278, -16],
+          [0.5093, -8.5],
+          [0.5704, -5.7],
+          [0.6518, -9.2],
+          [0.713, -18],
+          [0.7944, -28],
+          [0.8657, -49],
+          [0.937, -100],
+          [1.0, -100]
+        ]
+      },
+      orch2: {
+        volume: [
+          [0.0, -100],
+          [0.275, -100],
+          [0.3565, -40],
+          [0.4278, -17],
+          [0.5093, -6.4],
+          [0.5704, -3.7],
+          [0.6518, -5.7],
+          [0.713, -5.7],
+          [0.7944, -14],
+          [0.8657, -46],
+          [0.937, -100],
+          [1.0, -100]
+        ]
+      },
+      voronoi: {
+        volume: [
+          [0.0, -100],
+          [0.1426, -100],
+          [0.2037, -28],
+          [0.713, -28],
+          [0.7944, -4.7],
+          [0.8657, -3.7],
+          [0.937, -18],
+          [1.0, -100]
+        ]
+      },
+      fm1: {
+        volume: [
+          [0.0, -100],
+          [0.2037, -100],
+          [0.275, -36],
+          [0.3463, -25],
+          [0.4176, -27],
+          [0.4991, -21],
+          [0.5704, -21],
+          [0.713, -100],
+          [1.0, -100]
+        ]
+      },
+      fm2: {
+        volume: [
+          [0.0, -100],
+          [0.5093, -100],
+          [0.6417, -27],
+          [0.8657, -35],
+          [0.937, -100],
+          [1.0, -100]
+        ]
+      },
+      mahler1: {
+        volume: [
+          [0.0, -100],
+          [0.1426, -100],
+          [0.2037, -32],
+          [0.275, -27],
+          [0.3565, -21],
+          [0.4278, -15],
+          [0.4991, -15],
+          [0.5704, -29],
+          [0.6518, -29],
+          [0.7231, -100],
+          [1.0, -100]
+        ]
+      },
+      piano: {
+        volume: [
+          [0.0, -100],
+          [0.3565, -100],
+          [0.4278, -24],
+          [0.4991, -24],
+          [0.5704, -9.5],
+          [0.6518, -9.5],
+          [0.7231, -38],
+          [0.8657, -38],
+          [0.9472, -100],
+          [1.0, -100]
+        ]
+      },
+      lang: {
+        volume: [
+          [0.0, -100],
+          [0.0815, -100],
+          [0.1426, -56],
+          [0.2037, -21],
+          [0.275, -13],
+          [0.3565, -8.7],
+          [0.4278, -5.4],
+          [0.4991, -5.4],
+          [0.5704, -2.6],
+          [0.8657, -30],
+          [0.937, -100],
+          [1.0, -100]
+        ]
+      },
+      sineChord: {
+        volume: [
+          [0.0, -100],
+          [0.4074, -100],
+          [0.4991, -56],
+          [0.5704, -46],
+          [0.6518, -49],
+          [0.7231, -56],
+          [0.7944, -52],
+          [0.8657, -53],
+          [0.937, -59],
+          [1.0, -100]
+        ]
+      },
+      supersaw: {
+        volume: [
+          [0.0, -100],
+          [0.4074, -100],
+          [0.4991, -42],
+          [0.5704, -9],
+          [0.6518, -24],
+          [0.7231, -100],
+          [1.0, -100]
+        ]
+      },
+      japbell: {
+        volume: [
+          [0.0, -100],
+          [0.0204, -100],
+          [0.0815, -29],
+          [0.1426, -23],
+          [0.4991, -23],
+          [0.5704, -30],
+          [0.6518, -30],
+          [0.713, -37],
+          [0.937, -37],
+          [1.0, -100]
+        ],
+        playbackRate: [
+          [0.0, 1.0],
+          [0.0815, 1.0],
+          [0.1426, 0.75],
+          [0.2037, 0.65],
+          [0.275, 0.5],
+          [0.3565, 0.4],
+          [0.438, 0.167],
+          [0.5093, 0.001],
+          [1.0, 0.001]
+        ]
+      },
+      mahler2: {
+        volume: [
+          [0.0, -100],
+          [0.6417, -100],
+          [0.7231, -29],
+          [0.7944, -27],
+          [0.8657, -18],
+          [0.9472, -35],
+          [1.0, -100]
+        ],
+        playbackRate: [
+          [0.0, 1.0],
+          [0.7944, 1.0],
+          [0.8657, 0.5],
+          [0.966, 0.25],
+          [1.0, 0.1]
+        ]
+      },
+      birds: {
+        volume: [
+          [0, -100],
+          [0.441, -100],
+          [0.735, -15],
+          [1, -15]
+        ]
+      }
+    };
+  
+    const busParamCurves = {
+      fmFilter: {
+        frequency: [
+          [0.0, 12000],
+          [0.2037, 12000],
+          [0.3565, 4000],
+          [0.5093, 800],
+          [0.713, 800],
+          [0.8657, 400],
+          [1.0, 300]
+        ]
+      },
+      langLadderFilter: {
+        frequency: [
+          [0.0, 20000],
+          [0.4991, 10000],
+          [0.5704, 6000],
+          [0.7231, 57],
+          [1.0, 57]
+        ]
+      }
+    };
+  
+    // ────── STEM CLASSES ──────
+    class BaseStem {
+      constructor(name, config) {
+        this.name = name;
+        this.config = config;
+        this.loaded = false;
+      }
+  
+      async load() {
+        throw new Error('load() must be implemented by subclass');
+      }
+  
+      updateParams(params) {
+        if (this.volumeControl && params.volume !== undefined) {
+          this.volumeControl.gain.rampTo(Tone.dbToGain(params.volume), 0.1);
+        }
+      }
+  
+      start() {
+        // Override in subclasses
+      }
+  
+      stop() {
+        // Override in subclasses
+      }
+    }
+  
+    class SimpleLoopStem extends BaseStem {
+      constructor(name, config) {
+        super(name, config);
+        this.overlapTime = config.crossfade || 0.3;
+        this.currentPlayer = 0;
+        this.players = [];
+        this.loop = null;
+      }
+  
+      createPlayers() {
+        // Two players pointing at the same file for crossfade looping
+        this.players.push(new Tone.Player(this.config.files[0]));
+        this.players.push(new Tone.Player(this.config.files[0]));
+      }
+  
+      onLoaded() {
+        if (this.loaded) return;
+        this.duration = this.players[0].buffer.duration;
+        this.loopInterval = this.duration - this.overlapTime;
+        this.setupGainStructure();
+      }
+  
+      setupGainStructure() {
+        // Single gain node for both players
+        this.volumeControl = new Tone.Gain(Tone.dbToGain(-Infinity));
+        this.players.forEach(p => p.connect(this.volumeControl));
+  
+        if (this.config.ladderFilter) {
+          this.volumeControl.connect(langLadderFilterSend);
+        } else if (this.config.effectsBus === 'mahler2') {
+          this.volumeControl.connect(mahler2Effects.input);
+        } else if (this.config.filter) {
+          this.volumeControl.connect(fmFilterSend);
+        } else {
+          this.volumeControl.connect(masterCompressor);
+        }
+  
+        if (this.config.reverb) {
+          this.volumeControl.connect(reverbSend);
+        }
+  
+        this.loaded = true;
+      }
+  
+      start() {
+        if (!this.loaded || this.loop) return;
+        this.loop = new Tone.Loop(time => {
+          this.players[this.currentPlayer].start(time);
+          this.currentPlayer = 1 - this.currentPlayer;
+        }, this.loopInterval).start(0);
+  
+        this.players[this.currentPlayer].start(Tone.now());
+        this.currentPlayer = 1 - this.currentPlayer;
+        Tone.Transport.start();
+      }
+  
+      stop() {
+        if (this.loop) {
+          this.loop.stop(0).dispose();
+          this.loop = null;
+        }
+        this.players.forEach(p => {
+          if (p.state === 'started') p.stop();
+        });
+      }
+    }
+  
+    // Refactored RegionSwitchStem with corrected Player instantiation
+    
+    class RegionSwitchStem extends BaseStem {
+      constructor(name, config) {
+        super(name, config);
+        this.playerPairs = [];
+        this.playerDurations = [];
+        this.nextPlayerIndices = [];
+        this.currentRegionIndex = -1;
+        this.activeLoop = null;
+        this.pendingSwitchId = null;
+        this.lastActivePlayer = null;
+        this._bufferPromises = [];
+        this.lastPlayerStartTime = null; // Track when the current player started
+      }
+
+      // Load each file into a Tone.Buffer, await all, then create players
+      async createPlayers() {
+        this._bufferPromises = this.config.files.map(file => {
+          return new Promise(resolve => {
+            new Tone.Buffer(file, buffer => resolve(buffer));
+          });
+        });
+
+        const buffers = await Promise.all(this._bufferPromises);
+
+        buffers.forEach((buffer, regionIndex) => {
+          // Pass the raw AudioBuffer into the Player constructor, not an object
+          const playerA = new Tone.Player(buffer);
+          const playerB = new Tone.Player(buffer);
+          this.playerPairs.push([playerA, playerB]);
+          this.nextPlayerIndices.push(0);
+        });
+
+        this.onLoaded();
+      }
+
+      onLoaded() {
+        if (this.loaded) return;
+
+        // Single gain node for all players
+        this.volumeControl = new Tone.Gain(Tone.dbToGain(-Infinity));
+        this.playerPairs.flat().forEach(p => p.connect(this.volumeControl));
+        
+        if (this.config.ladderFilter) {
+          this.volumeControl.connect(langLadderFilterSend);
+        } else if (this.config.effectsBus === 'mahler2') {
+          this.volumeControl.connect(mahler2Effects.input);
+        } else if (this.config.filter) {
+          this.volumeControl.connect(fmFilterSend);
+        } else {
+          this.volumeControl.connect(masterCompressor);
+        }
+
+        if (this.config.reverb) {
+          this.volumeControl.connect(reverbSend);
+        }
+
+        this.playerPairs.forEach((pair, idx) => {
+          const dur = pair[0].buffer.duration;
+          this.playerDurations.push(dur);
+        });
+
+        this.loaded = true;
+      }
+
+      _startLoopForRegion(regionIndex, startTime = Tone.now()) {
+        console.log(`[${this.name}] Starting loop for region ${regionIndex} at time ${startTime.toFixed(3)}`);
+        
+        if (this.activeLoop) {
+          this.activeLoop.stop(startTime);
+          this.activeLoop.dispose();
+        }
+
+        const duration = this.playerDurations[regionIndex];
+        const crossfade = this.config.crossfade;
+        const loopInterval = duration - crossfade;
+
+        this.activeLoop = new Tone.Loop(time => {
+          const i = this.nextPlayerIndices[regionIndex];
+          const p = this.playerPairs[regionIndex][i];
+          p.start(time);
+          this.lastActivePlayer = p;
+          this.lastPlayerStartTime = time; // Track when this player started
+          this.nextPlayerIndices[regionIndex] = 1 - i;
+        }, loopInterval).start(startTime);
+
+        const initialIndex = this.nextPlayerIndices[regionIndex];
+        const initialPlayer = this.playerPairs[regionIndex][initialIndex];
+        initialPlayer.start(startTime);
+        this.lastActivePlayer = initialPlayer;
+        this.lastPlayerStartTime = startTime; // Track initial player start time
+        this.nextPlayerIndices[regionIndex] = 1 - initialIndex;
+        this.currentRegionIndex = regionIndex;
+      }
+
+      // Only start once this.loaded is true
+      async start() {
+        if (!this.loaded || this.currentRegionIndex !== -1) return;
+        console.log(`[${this.name}] Initial start - beginning with region 0`);
+        this.currentRegionIndex = 0;
+        this._startLoopForRegion(0);
+        Tone.Transport.start();
+      }
+
+      stop() {
+        if (this.pendingSwitchId) {
+          Tone.Transport.clear(this.pendingSwitchId);
+          this.pendingSwitchId = null;
+        }
+        if (this.activeLoop) {
+          this.activeLoop.stop(0).dispose();
+          this.activeLoop = null;
+        }
+        this.playerPairs.flat().forEach(p => {
+          if (p.state === 'started') p.stop(0);
+        });
+        this.currentRegionIndex = -1;
+      }
+
+      updateParams(params) {
+        super.updateParams(params);
+        if (!this.loaded || params.ratio === undefined || this.currentRegionIndex === -1)
+          return;
+
+        const targetRegionIndex = this._getRegionIndexForRatio(params.ratio);
+        if (targetRegionIndex === this.currentRegionIndex) {
+          if (this.pendingSwitchId) {
+            Tone.Transport.clear(this.pendingSwitchId);
+            this.pendingSwitchId = null;
+          }
+          return;
+        }
+
+        if (this.pendingSwitchId) {
+          Tone.Transport.clear(this.pendingSwitchId);
+          this.pendingSwitchId = null;
+        }
+
+        // Calculate position based on time elapsed since last player start
+        const currentPosition = this.lastPlayerStartTime !== null 
+          ? Tone.now() - this.lastPlayerStartTime 
+          : null;
+        
+        const duration = this.playerDurations[this.currentRegionIndex];
+        const crossfade = this.config.crossfade;
+        const loopInterval = duration - crossfade;
+        
+        // Adjust position to account for looping
+        const adjustedPosition = currentPosition !== null 
+          ? currentPosition % loopInterval 
+          : null;
+        
+        const crossfadePoint = loopInterval; // Start of crossfade zone in the loop
+
+        if (adjustedPosition === null) {
+          // No valid timing info - force immediate switch
+          this._startLoopForRegion(targetRegionIndex);
+          return;
+        }
+
+        // Since we're using looping, we need to check if we're near the end of the loop interval
+        const timeUntilCrossfade = crossfadePoint - adjustedPosition;
+        
+        if (timeUntilCrossfade <= 0.1) { // Within 100ms of crossfade, or past it
+          // Immediate switch
+          this._startLoopForRegion(targetRegionIndex);
+        } else {
+          // Schedule switch at the start of the next crossfade
+          const switchTime = Tone.now() + timeUntilCrossfade;
+          this.pendingSwitchId = Tone.Transport.scheduleOnce(time => {
+            this._startLoopForRegion(targetRegionIndex, time);
+            this.pendingSwitchId = null;
+          }, switchTime);
+        }
+      }
+
+      _getRegionIndexForRatio(ratio) {
+        let regionIndex = 0;
+        for (let i = 0; i < this.config.regions.length; i++) {
+          if (ratio >= this.config.regions[i]) {
+            regionIndex = i;
+          } else {
+            break;
+          }
+        }
+        // Only log when region boundaries are crossed
+        if (this._lastLoggedRegion !== regionIndex) {
+          this._lastLoggedRegion = regionIndex;
+        }
+        return regionIndex;
+      }
+    }
+    
+  // ────── STEM FACTORY ──────
+    function createStem(name, config) {
+      switch (config.type) {
+        case 'simple_loop':
+          return new SimpleLoopStem(name, config);
+        case 'region_switch':
+          return new RegionSwitchStem(name, config);
+        default:
+          console.warn(`Unknown stem type: ${config.type}.`);
+          return new SimpleLoopStem(name, config);
+      }
+    }
+  
+    // ────── MAIN AUDIO SYSTEM ──────
+    class AudioSystem {
+      constructor() {
+        this.stems = {};
+        this.loaded = false;
+        this.currentRatio = 0;
+        this.targetRatio = 0;
+      }
+  
+      async initialize() {
+        await Tone.start();
+      }
+  
+      async loadStems(stemNames = []) {
+        const stemsToSetup = [];
+  
+        // Create stems and kick off any createPlayers() calls
+        stemNames.forEach(name => {
+          if (stemConfigs[name] && !this.stems[name]) {
+            const stem = createStem(name, stemConfigs[name]);
+            this.stems[name] = stem;
+            if (stem.createPlayers) {
+              stemsToSetup.push(stem);
+            }
+          }
+        });
+  
+        // Await createPlayers() for each stem that needs it
+        const loadPromises = stemsToSetup.map(stem => stem.createPlayers());
+        if (loadPromises.length > 0) {
+          await Promise.all(loadPromises);
+        }
+  
+        // Now wait for any Tone.Player instances (from SimpleLoopStem) to finish loading
+        await Tone.loaded();
+  
+        // Call onLoaded() now that all buffers are guaranteed ready
+        stemsToSetup.forEach(stem => {
+          if (stem.onLoaded) stem.onLoaded();
+        });
+  
+        this.loaded = true;
+        console.log(`Stems loaded:`, stemNames);
+      }
+  
+      updateFromScroll(ratio) {
+        this.targetRatio = Math.min(Math.max(ratio, 0), 1);
+      }
+  
+      smoothUpdate(deltaTime) {
+        if (!this.loaded) return;
+  
+        const SMOOTH_TIME = 2000;
+        const t = Math.min(deltaTime / SMOOTH_TIME, 1);
+        this.currentRatio += (this.targetRatio - this.currentRatio) * t;
+  
+        if (Math.abs(this.targetRatio - this.currentRatio) < 0.0001) {
+          this.currentRatio = this.targetRatio;
+        }
+  
+        this.updateAllParams();
+      }
+  
+      updateAllParams() {
+        const handledStems = new Set();
+        const crossfadeGroupNames = ['japbell', 'mahler2'];
+  
+        crossfadeGroupNames.forEach(groupName => {
+          const groupStems = Object.values(this.stems).filter(
+            stem => stem.config.group === groupName
+          );
+          if (groupStems.length > 0) {
+            this.updateCrossfadeGroup(groupName, groupStems);
+            groupStems.forEach(stem => handledStems.add(stem.name));
+          }
+        });
+  
+        Object.entries(this.stems).forEach(([name, stem]) => {
+          if (handledStems.has(name)) return;
+          const curves = stemParamCurves[name];
+          if (!curves) return;
+          const params = {};
+          Object.entries(curves).forEach(([paramName, curve]) => {
+            params[paramName] = this.interpolateMultiSegment(
+              this.currentRatio,
+              curve
+            );
+          });
+          params.ratio = this.currentRatio;
+          stem.updateParams(params);
+        });
+  
+        Object.entries(busParamCurves).forEach(([busName, curves]) => {
+          if (busName === 'fmFilter') {
+            const freqValue = this.interpolateMultiSegment(
+              this.currentRatio,
+              curves.frequency
+            );
+            fmFilterSend.frequency.rampTo(freqValue, 0.05);
+          } else if (busName === 'langLadderFilter') {
+            const freqValue = this.interpolateMultiSegment(
+              this.currentRatio,
+              curves.frequency
+            );
+            langLadderFilterSend.frequency.rampTo(freqValue, 0.05);
+          }
+        });
+  
+        updateBackground(this.currentRatio);
+      }
+  
+      updateCrossfadeGroup(groupName, groupStems) {
+        const groupCurves = stemParamCurves[groupName];
+        if (!groupCurves) return;
+        const targetSpeed = this.interpolateMultiSegment(
+          this.currentRatio,
+          groupCurves.playbackRate
+        );
+        const masterVolumeDb = this.interpolateMultiSegment(
+          this.currentRatio,
+          groupCurves.volume
+        );
+  
+        if (masterVolumeDb < -99) {
+          groupStems.forEach(stem => stem.updateParams({ volume: -100 }));
+          return;
+        }
+  
+        const sortedStems = groupStems.sort(
+          (a, b) => b.config.speed - a.config.speed
+        );
+        let lowerStem = sortedStems[sortedStems.length - 1];
+        let upperStem = sortedStems[0];
+        for (let i = 0; i < sortedStems.length - 1; i++) {
+          if (
+            targetSpeed >= sortedStems[i + 1].config.speed &&
+            targetSpeed <= sortedStems[i].config.speed
+          ) {
+            upperStem = sortedStems[i];
+            lowerStem = sortedStems[i + 1];
+            break;
+          }
+        }
+        const speedRange = upperStem.config.speed - lowerStem.config.speed;
+        const crossfadePos =
+          speedRange > 0.0001
+            ? (upperStem.config.speed - targetSpeed) / speedRange
+            : 0;
+        groupStems.forEach(stem => {
+          let gain = 0;
+          if (stem === lowerStem && upperStem === lowerStem) {
+            gain = 1;
+          } else if (stem === lowerStem) {
+            gain = Math.sin(crossfadePos * 0.5 * Math.PI);
+          } else if (stem === upperStem) {
+            gain = Math.cos(crossfadePos * 0.5 * Math.PI);
+          }
+          const finalDb =
+            gain > 0.001 ? Tone.gainToDb(gain) + masterVolumeDb : -100;
+          stem.updateParams({ volume: finalDb });
+        });
+      }
+  
+      interpolateMultiSegment(ratio, points) {
+        const r = Math.min(Math.max(ratio, 0), 1);
+        if (r <= points[0][0]) return points[0][1];
+        const lastIdx = points.length - 1;
+        if (r >= points[lastIdx][0]) return points[lastIdx][1];
+        for (let i = 1; i < points.length; i++) {
+          const [x0, y0] = points[i - 1];
+          const [x1, y1] = points[i];
+          if (r >= x0 && r <= x1) {
+            const t = (r - x0) / (x1 - x0);
+            return y0 + (y1 - y0) * t;
+          }
+        }
+        return points[lastIdx][1];
+      }
+    }
+  
+    // ═══════════════════════════════════════════════════════════════
+    // UI AND SCROLL INTEGRATION
+    // ═══════════════════════════════════════════════════════════════
+  
+    const audioSystem = new AudioSystem();
+    const startButton = document.getElementById('start-button');
+    let lastUpdate = performance.now();
+    let lastMoodIndex = -1;
+  
+    const allStemNames = Object.keys(stemConfigs);
+    const essentialStems = [
+      'mainsynth',
+      'glist',
+      'bubbles',
+      'japbell_1.0',
+      'japbell_0.75',
+      'japbell_0.5',
+      'lang',
+      'voronoi',
+      'orch',
+      'orch2',
+      'mahler1',
+      'fm1',
+      'birds'
+    ];
+    const essentialStemsSet = new Set(essentialStems);
+  
+    const secondaryStems = allStemNames.filter(name => {
+      const config = stemConfigs[name];
+      if (!config) return false;
+      const isEssential = essentialStemsSet.has(name);
+      const inEssentialGroup =
+        config.group &&
+        essentialStems.some(
+          eName => stemConfigs[eName] && stemConfigs[eName].group === config.group
+        );
+      return !isEssential && !inEssentialGroup;
+    });
+  
+    async function setupAndStartExperience() {
+      startButton.disabled = true;
+      startButton.textContent = 'Loading essential files...';
+  
+      try {
+        await audioSystem.initialize();
+        await audioSystem.loadStems(essentialStems);
+  
+        startButton.style.display = 'none';
+        setupVolumeControl();
+        setupScrollTracking();
+        setupFadeInObserver();
+  
+        // Start all loaded stems
+        Object.values(audioSystem.stems).forEach(stem => {
+          if (stem.loaded) stem.start();
+        });
+  
+        // Load secondary stems in the background
+        audioSystem.loadStems(secondaryStems).then(() => {
+          console.log('Secondary stems finished loading.');
+          Object.values(audioSystem.stems).forEach(stem => {
+            if (
+              secondaryStems.includes(stem.name) &&
+              stem.loaded &&
+              !(stem instanceof RegionSwitchStem)
+            ) {
+              stem.start();
+            }
+          });
+        });
+      } catch (error) {
+        console.error('Failed to set up audio:', error);
+        startButton.textContent = 'Audio failed to load';
+        startButton.disabled = false;
+      }
+    }
+  
+    startButton.addEventListener('click', setupAndStartExperience);
+  
+    function smoothStep() {
+      if (!audioSystem.loaded) {
+        requestAnimationFrame(smoothStep);
+        return;
+      }
+      const now = performance.now();
+      const elapsed = now - lastUpdate;
+      lastUpdate = now;
+      try {
+        audioSystem.smoothUpdate(elapsed);
+      } catch (e) {
+        console.error('Error during audio update:', e);
+      }
+      requestAnimationFrame(smoothStep);
+    }
+  
+    function updateTargetRatio() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const raw = docHeight > 0 ? Math.min(1, scrollTop / docHeight) : 0;
+      audioSystem.updateFromScroll(raw);
+    }
+  
+    function setupScrollTracking() {
+      window.addEventListener('scroll', updateTargetRatio, { passive: true });
+      lastUpdate = performance.now();
+      requestAnimationFrame(smoothStep);
+    }
+  
+    function setupVolumeControl() {
+      const volumeControl = document.getElementById('volume-control');
+      if (!volumeControl) return;
+
+      const muteButton = document.getElementById('mute-button');
+      const volumeSlider = document.getElementById('volume-slider');
+      const iconVolumeOn = document.getElementById('icon-volume-on');
+      const iconVolumeOff = document.getElementById('icon-volume-off');
+
+      if (!muteButton || !volumeSlider || !iconVolumeOn || !iconVolumeOff) return;
+      
+      volumeControl.style.display = 'flex';
+
+      function updateMuteIcon() {
+        const isMuted = Tone.Destination.mute;
+        iconVolumeOn.style.display = isMuted ? 'none' : 'block';
+        iconVolumeOff.style.display = isMuted ? 'block' : 'none';
+        volumeSlider.disabled = isMuted;
+      }
+
+      // Set initial state from Tone.js
+      volumeSlider.value = Tone.Destination.volume.value;
+      updateMuteIcon();
+
+      muteButton.addEventListener('click', () => {
+        Tone.Destination.mute = !Tone.Destination.mute;
+        updateMuteIcon();
+      });
+
+      volumeSlider.addEventListener('input', () => {
+        const newVolume = parseFloat(volumeSlider.value);
+        Tone.Destination.volume.rampTo(newVolume, 0.1);
+        
+        if (Tone.Destination.mute) {
+          Tone.Destination.mute = false;
+          updateMuteIcon();
+        }
+      });
+    }
+
+    function setupFadeInObserver() {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+      );
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+  
+    function updateBackground(ratio) {
+      const moodIndex = Math.min(11, Math.max(1, Math.floor(ratio * 11) + 1));
+      if (moodIndex === lastMoodIndex) return;
+      const currentBg = document.getElementById(`bg-${lastMoodIndex}`);
+      if (currentBg) currentBg.classList.remove('active');
+      const newBg = document.getElementById(`bg-${moodIndex}`);
+      if (newBg) newBg.classList.add('active');
+      document.body.classList.remove(`mood-${lastMoodIndex}`);
+      document.body.classList.add(`mood-${moodIndex}`);
+      lastMoodIndex = moodIndex;
+    }
+  </script>
+  
+  
+</body>
+</html>
