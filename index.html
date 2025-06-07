@@ -798,53 +798,60 @@
   </div>
 
   <script type="module">
-    import * as Tone from 'https://cdn.skypack.dev/tone';
-  
+    // Note: Tone.js import is now deferred until user interaction
+    let Tone = null;
+    
     // ═══════════════════════════════════════════════════════════════
     // FLEXIBLE AUDIO SYSTEM ARCHITECTURE
     // ═══════════════════════════════════════════════════════════════
-  
-    // --- MASTER BUS ---
-    const masterCompressor = new Tone.Compressor({
-      threshold: -5,
-      ratio: 1.25,
-      attack: 0.1, // slow attack
-      release: 0.5, // slow release
-    }).toDestination();
-  
-    // --- GLOBAL EFFECTS BUSES ---
-    const reverbSend = new Tone.Freeverb({
-      roomSize: 0.9,
-      dampening: 8000,
-      wet: 0.6,
-    }).connect(masterCompressor);
-  
-    const fmFilterSend = new Tone.Filter({
-      type: 'lowpass',
-      frequency: 20000,
-      Q: 0.5,
-    }).connect(masterCompressor);
-  
-    const langLadderFilterSend = new Tone.Filter({
-      frequency: 20000,
-      type: 'lowpass',
-      Q: 0,
-      rolloff: -12,
-    }).connect(masterCompressor);
-  
-    const mahler2Phaser = new Tone.Phaser({
-      frequency: 0.2,
-      octaves: 4,
-      stages: 8,
-      Q: 8,
-      baseFrequency: 400,
-    });
-    mahler2Phaser.connect(reverbSend);
-    mahler2Phaser.connect(masterCompressor);
-  
-    const mahler2Effects = {
-      input: mahler2Phaser,
-    };
+    
+        // Audio system variables - will be initialized after Tone import
+    let masterCompressor, reverbSend, fmFilterSend, langLadderFilterSend, mahler2Phaser, mahler2Effects;
+
+    // Function to initialize audio buses after Tone is imported
+    function initializeAudioBuses() {
+      // --- MASTER BUS ---
+      masterCompressor = new Tone.Compressor({
+        threshold: -5,
+        ratio: 1.25,
+        attack: 0.1, // slow attack
+        release: 0.5, // slow release
+      }).toDestination();
+
+      // --- GLOBAL EFFECTS BUSES ---
+      reverbSend = new Tone.Freeverb({
+        roomSize: 0.9,
+        dampening: 8000,
+        wet: 0.6,
+      }).connect(masterCompressor);
+
+      fmFilterSend = new Tone.Filter({
+        type: 'lowpass',
+        frequency: 20000,
+        Q: 0.5,
+      }).connect(masterCompressor);
+
+      langLadderFilterSend = new Tone.Filter({
+        frequency: 20000,
+        type: 'lowpass',
+        Q: 0,
+        rolloff: -12,
+      }).connect(masterCompressor);
+
+      mahler2Phaser = new Tone.Phaser({
+        frequency: 0.2,
+        octaves: 4,
+        stages: 8,
+        Q: 8,
+        baseFrequency: 400,
+      });
+      mahler2Phaser.connect(reverbSend);
+      mahler2Phaser.connect(masterCompressor);
+
+      mahler2Effects = {
+        input: mahler2Phaser,
+      };
+    }
   
     // ────── STEM CONFIGURATIONS ──────
     const stemConfigs = {
@@ -1565,7 +1572,7 @@
       }
     }
   
-    // ────── MAIN AUDIO SYSTEM ──────
+        // ────── MAIN AUDIO SYSTEM ──────
     class AudioSystem {
       constructor() {
         this.stems = {};
@@ -1573,9 +1580,10 @@
         this.currentRatio = 0;
         this.targetRatio = 0;
       }
-  
+
       async initialize() {
-        await Tone.start();
+        // Tone.start() is now called before this method
+        // This method can be used for any additional setup if needed
       }
   
       async loadStems(stemNames = []) {
@@ -1784,24 +1792,46 @@
       return !isEssential && !inEssentialGroup;
     });
   
-    async function setupAndStartExperience() {
+        async function setupAndStartExperience() {
       startButton.disabled = true;
-      startButton.textContent = 'Loading essential files...';
-  
+      startButton.textContent = 'Initializing audio...';
+
       try {
+        // 1) Dynamically import Tone so the AudioContext is created NOW
+        const ToneModule = await import('https://cdn.skypack.dev/tone');
+        Tone = ToneModule.default || ToneModule;
+        
+        // Alternative approach if the above doesn't work
+        if (!Tone || !Tone.start) {
+          // Import as namespace
+          Tone = await import('https://cdn.skypack.dev/tone');
+        }
+        
+        console.log('Tone imported:', Tone); // Debug log
+        console.log('Tone.start available:', typeof Tone.start); // Debug log
+        
+        // 2) Resume/start the AudioContext on this user gesture
+        await Tone.start();
+        
+        // 3) Initialize all audio buses now that Tone is available
+        initializeAudioBuses();
+        
+        startButton.textContent = 'Loading essential files...';
+        
+        // 4) Initialize audio system and load stems
         await audioSystem.initialize();
         await audioSystem.loadStems(essentialStems);
-  
+
         startButton.style.display = 'none';
         setupVolumeControl();
         setupScrollTracking();
         setupFadeInObserver();
-  
+
         // Start all loaded stems
         Object.values(audioSystem.stems).forEach(stem => {
           if (stem.loaded) stem.start();
         });
-  
+
         // Load secondary stems in the background
         audioSystem.loadStems(secondaryStems).then(() => {
           console.log('Secondary stems finished loading.');
@@ -1821,7 +1851,7 @@
         startButton.disabled = false;
       }
     }
-  
+
     startButton.addEventListener('click', setupAndStartExperience);
   
     function smoothStep() {
