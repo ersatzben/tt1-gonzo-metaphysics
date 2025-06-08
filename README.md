@@ -20,5 +20,5 @@ This site uses:
 
 ## Links
 
-- [Ersatz (Ben Johnson and James Cornick)]("https://www.ersatzmusic.com")
-- [Tim Hardwick]("https://www.timhardwick.com")
+- [Ersatz (Ben Johnson and James Cornick)](https://www.ersatzmusic.com)
+- [Tim Hardwick](https://www.timhardwick.com)
